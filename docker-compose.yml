@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  validaciones:
+    restart: "always"
+    container_name: validaciones
+    command: uvicorn validaciones:app --host 0.0.0.0 --port 8000 --reload
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
