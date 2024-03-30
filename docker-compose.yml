@@ -1,12 +1,33 @@
-version: '3'
+version: "3.8"
 
 services:
-  validaciones:
-    restart: "always"
-    container_name: validaciones
-    command: uvicorn validaciones:app --host 0.0.0.0 --port 8000 --reload
-    build: .
+  db:
+    image: postgres:14.6
+    env_file:
+      - .env
     volumes:
-      - .:/app
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
     ports:
-      - "8000:8000"
+      - ${PG_PORT_LOCAL}:${PG_PORT}
+    networks:
+      - main
+
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    networks:
+      - main
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+
+networks:
+  main:
+
+volumes:
+  database-data:
