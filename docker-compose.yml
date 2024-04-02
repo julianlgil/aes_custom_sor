@@ -24,7 +24,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./app:/app
+      - .:/app
 
 networks:
   main:
