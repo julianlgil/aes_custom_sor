@@ -51,3 +51,8 @@ def register_ofertas_view(app: FastAPI, service: OfertasService) -> None:
         if risk_score.provider == 'WORLDOFFICE':
             return {"score": 50.86}
         return {"score": 95}
+
+    @app.post("/ceder_facturas")
+    def ceder_facturas(payload: Dict[str, Any]):
+        print(payload)
+        return {"resultado": True if payload.get('facturas') else False}
