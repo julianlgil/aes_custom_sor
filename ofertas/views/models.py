@@ -27,3 +27,8 @@ class OfertaCreateRequestDTO(BaseModel):
 
 class OfertaUpdateRequestDTO(BaseModel):
     accepted: bool
+
+class RiskScore(BaseModel):
+    client_id: str
+    amount: float
+    provider: str

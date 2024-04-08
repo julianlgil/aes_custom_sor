@@ -8,7 +8,7 @@ from ofertas.services.models import Oferta
 from shared.errors import SERVICE_UNAVAILABLE_ERROR, ResponseException
 
 from ofertas.services.ofertas import OfertasService
-from ofertas.views.models import OfertaCreateRequestDTO, OfertaUpdateRequestDTO
+from ofertas.views.models import OfertaCreateRequestDTO, OfertaUpdateRequestDTO, RiskScore
 
 
 def register_ofertas_view(app: FastAPI, service: OfertasService) -> None:
@@ -46,3 +46,8 @@ def register_ofertas_view(app: FastAPI, service: OfertasService) -> None:
         except Exception as e:
             raise ResponseException(SERVICE_UNAVAILABLE_ERROR) from e
 
+    @app.post("/validar_score_riego")
+    def validar_score_riego(risk_score: RiskScore):
+        if risk_score.provider == 'WORLDOFFICE':
+            return {"score": 50.86}
+        return {"score": 95}
